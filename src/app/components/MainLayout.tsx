@@ -1,9 +1,9 @@
-import { Outlet, Link, useLocation } from "react-router";
+import { Outlet, Link, useLocation, href } from "react-router";
 import { 
   Home, Users, Briefcase, Calendar, DollarSign, 
   PiggyBank, TrendingUp, ArrowUpCircle, MapPin, 
   AlertCircle, LogOut, Award, Building2, FileText,
-  Menu, X
+  Menu, X, BookUser, CalendarCheck2, Calculator, MessageSquare
 } from "lucide-react";
 import { useState } from "react";
 
@@ -11,13 +11,17 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Organization", href: "/organization", icon: Building2 },
   { name: "Employees", href: "/employees", icon: Users },
+  { name: "Service Book", href: "/servicebook", icon :BookUser },
   { name: "Recruitment", href: "/recruitment", icon: Briefcase },
   { name: "Probation", href: "/probation", icon: Award },
   { name: "Leave Management", href: "/leave", icon: Calendar },
+  { name: "Attandence Management", href: "/attandence", icon : CalendarCheck2},
+  { name: "Pay Scale & Calculation", href:"/payscale", icon :Calculator},
   { name: "Promotion", href: "/promotion", icon: TrendingUp },
   { name: "Increment", href: "/increment", icon: ArrowUpCircle },
   { name: "Transfer", href: "/transfer", icon: MapPin },
   { name: "Disciplinary", href: "/disciplinary", icon: AlertCircle },
+  { name: "Grievances", href:"/grievances", icon : MessageSquare},
   { name: "Retirement", href: "/retirement", icon: LogOut },
   { name: "Payroll", href: "/payroll", icon: DollarSign },
   { name: "PF Trust", href: "/pf-trust", icon: PiggyBank },
@@ -36,7 +40,7 @@ export default function MainLayout() {
           <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
           <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white">
             <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
-              <h1 className="text-xl font-bold text-blue-900">Govt HRMS</h1>
+              <h1 className="text-xl font-bold text-blue-900">MSWC HRMS</h1>
               <button onClick={() => setSidebarOpen(false)} className="text-gray-500 hover:text-gray-700">
                 <X className="w-6 h-6" />
               </button>
@@ -69,7 +73,7 @@ export default function MainLayout() {
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-1 min-h-0 bg-white border-r border-gray-200">
           <div className="flex items-center h-16 px-4 border-b border-gray-200">
-            <h1 className="text-xl font-bold text-blue-900">Government HRMS</h1>
+            <h1 className="text-sm font-bold text-blue-900">Maharashtra State Warehousing Corporation HRMS</h1>
           </div>
           <nav className="flex-1 overflow-y-auto px-3 py-4">
             {navigation.map((item) => {
@@ -114,7 +118,7 @@ export default function MainLayout() {
           >
             <Menu className="w-6 h-6" />
           </button>
-          <h1 className="text-lg font-bold text-blue-900">Government HRMS</h1>
+          <h1 className="text-sm font-bold text-blue-900">Maharashtra State Warehousing Corporation HRMS</h1>
         </div>
 
         {/* Page content */}

@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import { LeaveApply } from "./ApplyLeave";
 
 const leaveBalance = [
   { empId: "EMP001", name: "Rajesh Kumar", cl: { opening: 8, availed: 3, balance: 5 }, el: { opening: 138, availed: 12, balance: 126 }, hpl: { opening: 45, availed: 0, balance: 45 } },
@@ -18,6 +20,8 @@ const leaveApplications = [
 ];
 
 export default function LeaveManagement() {
+  const [handleModalOpen,setHandleModalOpen] = useState(false)
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -25,11 +29,21 @@ export default function LeaveManagement() {
           <h1 className="text-3xl font-bold text-gray-900">Leave Management</h1>
           <p className="text-gray-500 mt-1">Rule-based Leave Engine with Accrual & Workflows</p>
         </div>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2" onClick={() => setHandleModalOpen(true)}>
           <Plus className="w-4 h-4" />
           Apply Leave
         </Button>
       </div>
+
+       <Dialog open={handleModalOpen} onOpenChange={setHandleModalOpen} >
+        <DialogContent >
+          <DialogHeader>
+            <DialogTitle>Apply Leave</DialogTitle>
+          </DialogHeader>
+
+          <LeaveApply closeModal={() => setHandleModalOpen(false)} />
+        </DialogContent>
+      </Dialog>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>

@@ -1,63 +1,383 @@
-import { MapPin } from "lucide-react";
+import { ArrowRightLeft, MapPin, Clock, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../components/ui/table";
+import { toast } from "sonner";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
-const transferRequests = [
-  { empId: "EMP045", name: "Sunita Verma", fromOffice: "Regional Office - Delhi", toOffice: "Head Office", type: "Administrative", requestDate: "2026-02-10", status: "Pending", allowance: 25000 },
-  { empId: "EMP067", name: "Vijay Singh", fromOffice: "Head Office", toOffice: "Regional Office - Mumbai", type: "Request-based", requestDate: "2026-02-15", status: "Approved", allowance: 35000 },
+const stats = [
+  { label: "Pending Transfers", value: "8", icon: Clock, color: "text-yellow-600" },
+  { label: "Approved This Month", value: "23", icon: CheckCircle, color: "text-green-600" },
+  { label: "In Transit", value: "5", icon: ArrowRightLeft, color: "text-blue-600" },
+  { label: "Total This Year", value: "156", icon: MapPin, color: "text-purple-600" },
 ];
 
-export default function TransferManagement() {
+const transferRequests = [
+  {
+    id: "TR001",
+    employeeId: "EMP001",
+    employeeName: "Rajesh Kumar",
+    currentDepartment: "Administration",
+    currentLocation: "Delhi",
+    requestedDepartment: "Finance",
+    requestedLocation: "Mumbai",
+    reason: "Personal reasons",
+    requestDate: "2026-02-15",
+    status: "Pending"
+  },
+  {
+    id: "TR002",
+    employeeId: "EMP005",
+    employeeName: "Suresh Yadav",
+    currentDepartment: "Finance",
+    currentLocation: "Mumbai",
+    requestedDepartment: "Finance",
+    requestedLocation: "Bangalore",
+    reason: "Family relocation",
+    requestDate: "2026-02-12",
+    status: "Approved"
+  },
+  {
+    id: "TR003",
+    employeeId: "EMP007",
+    employeeName: "Vikram Reddy",
+    currentDepartment: "Health",
+    currentLocation: "Chennai",
+    requestedDepartment: "Health",
+    requestedLocation: "Hyderabad",
+    reason: "Career growth",
+    requestDate: "2026-02-10",
+    status: "In Transit"
+  },
+  {
+    id: "TR004",
+    employeeId: "EMP002",
+    employeeName: "Priya Sharma",
+    currentDepartment: "Public Works",
+    currentLocation: "Pune",
+    requestedDepartment: "Public Works",
+    requestedLocation: "Delhi",
+    reason: "Personal reasons",
+    requestDate: "2026-02-08",
+    status: "Rejected"
+  },
+];
+
+export default function Transfers() {
+  const handleApprove = (id: string) => {
+    toast.success(`Transfer request ${id} approved`);
+  };
+
+  const handleReject = (id: string) => {
+    toast.error(`Transfer request ${id} rejected`);
+  };
+
+   const [handleModalOpen,setHandleModalOpen] = useState(false)
+
+     const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    type: '',
+    employeeId: '',
+    effectiveDate: '',
+    orderNumber: '',
+    fromDesignation: '',
+    toDesignation: '',
+    fromOffice: '',
+    toOffice: '',
+    fromPayLevel: '',
+    toPayLevel: '',
+    remarks: '',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setHandleModalOpen(false)
+
+    toast.success(`Transfer request created successfully`);
+  
+  };
+
   return (
     <div className="space-y-6">
+      {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Transfer Management</h1>
-          <p className="text-gray-500 mt-1">Administrative & Request-based Transfers</p>
+          <h2 className="text-2xl font-semibold text-gray-900">Transfer Management</h2>
+          <p className="text-sm text-gray-500 mt-1">
+            Manage employee transfer requests and postings
+          </p>
         </div>
-        <Button>Initiate Transfer</Button>
+        <Button onClick={() => setHandleModalOpen(true)}>Initiate Transfer</Button>
       </div>
 
+             <Dialog open={handleModalOpen}   >
+        <DialogContent >
+          <DialogHeader>
+            <DialogTitle>Apply For Transfer</DialogTitle>
+          </DialogHeader>
+
+                 <div className="p-2 space-y-3" style={{maxHeight:"80vh", overflowY:"scroll"}}>
+      <div>
+        <h1 className="text-2xl font-bold text-foreground mt-4">Create Transfer/Promotion Order</h1>
+      </div>
+
+      <div className="max-w-3xl">
+        <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-border p-6 shadow-sm space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Type *</label>
+              <select
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                required
+              >
+                <option value="">Select Type</option>
+                <option value="Transfer">Transfer</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Employee *</label>
+              <select
+                value={formData.employeeId}
+                onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                required
+              >
+                <option value="">Select Employee</option>
+                <option value="EMP001">EMP001 - Rajesh Kumar</option>
+                <option value="EMP002">EMP002 - Priya Singh</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Effective Date *</label>
+              <input
+                type="date"
+                value={formData.effectiveDate}
+                onChange={(e) => setFormData({ ...formData, effectiveDate: e.target.value })}
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Order Number *</label>
+              <input
+                type="text"
+                value={formData.orderNumber}
+                onChange={(e) => setFormData({ ...formData, orderNumber: e.target.value })}
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">From Designation</label>
+              <input
+                type="text"
+                value={formData.fromDesignation}
+                onChange={(e) => setFormData({ ...formData, fromDesignation: e.target.value })}
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">To Designation *</label>
+              <input
+                type="text"
+                value={formData.toDesignation}
+                onChange={(e) => setFormData({ ...formData, toDesignation: e.target.value })}
+                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">Remarks</label>
+            <textarea
+              value={formData.remarks}
+              onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
+              rows={3}
+              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+            />
+          </div>
+
+          <div className="flex gap-4 pt-4">
+            <button
+              type="button"
+              onClick={() => setHandleModalOpen(false)}
+              className="flex-1 px-6 py-3 border border-border rounded-lg hover:bg-accent"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 px-6 py-3 bg-[#1e3a8a] text-white rounded-lg hover:bg-[#1e40af]"
+            >
+              Create Order
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+        </DialogContent>
+      </Dialog>
+
+
+
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {stats.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <Card key={stat.label}>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-gray-600">{stat.label}</p>
+                    <p className="text-2xl font-semibold mt-2">{stat.value}</p>
+                  </div>
+                  <Icon className={`h-8 w-8 ${stat.color}`} />
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Transfer Requests Table */}
       <Card>
         <CardHeader>
           <CardTitle>Transfer Requests</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700">Employee</th>
-                  <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700">From Office</th>
-                  <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700">To Office</th>
-                  <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700">Type</th>
-                  <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700">Transfer Allowance</th>
-                  <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700">Status</th>
-                  <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transferRequests.map((transfer) => (
-                  <tr key={transfer.empId} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="py-3 px-4">
-                      <p className="text-sm font-medium text-gray-900">{transfer.name}</p>
-                      <p className="text-xs text-gray-500">{transfer.empId}</p>
-                    </td>
-                    <td className="py-3 px-4 text-sm text-gray-900">{transfer.fromOffice}</td>
-                    <td className="py-3 px-4 text-sm text-gray-900">{transfer.toOffice}</td>
-                    <td className="py-3 px-4"><Badge variant="outline">{transfer.type}</Badge></td>
-                    <td className="py-3 px-4 text-sm text-green-600">₹{transfer.allowance.toLocaleString()}</td>
-                    <td className="py-3 px-4">
-                      <Badge className={transfer.status === "Approved" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}>
-                        {transfer.status}
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Request ID</TableHead>
+                  <TableHead>Employee</TableHead>
+                  <TableHead>Current Posting</TableHead>
+                  <TableHead>Requested Posting</TableHead>
+                  <TableHead>Reason</TableHead>
+                  <TableHead>Request Date</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transferRequests.map((request) => (
+                  <TableRow key={request.id}>
+                    <TableCell className="font-medium">{request.id}</TableCell>
+                    <TableCell>
+                      <div>
+                        <p className="font-medium">{request.employeeName}</p>
+                        <p className="text-sm text-gray-500">{request.employeeId}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        <p className="font-medium">{request.currentDepartment}</p>
+                        <p className="text-sm text-gray-500 flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {request.currentLocation}
+                        </p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        <p className="font-medium">{request.requestedDepartment}</p>
+                        <p className="text-sm text-gray-500 flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {request.requestedLocation}
+                        </p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="max-w-xs truncate">{request.reason}</TableCell>
+                    <TableCell>{request.requestDate}</TableCell>
+                    <TableCell>
+                      <Badge 
+                        variant={
+                          request.status === "Approved" ? "default" :
+                          request.status === "Rejected" ? "destructive" :
+                          request.status === "In Transit" ? "default" :
+                          "secondary"
+                        }
+                      >
+                        {request.status}
                       </Badge>
-                    </td>
-                    <td className="py-3 px-4"><Button variant="outline" size="sm">View</Button></td>
-                  </tr>
+                    </TableCell>
+                    <TableCell>
+                      {request.status === "Pending" ? (
+                        <div className="flex gap-2">
+                          <Button 
+                            size="sm" 
+                            variant="ghost"
+                            onClick={() => handleApprove(request.id)}
+                          >
+                            Approve
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="ghost"
+                            onClick={() => handleReject(request.id)}
+                          >
+                            Reject
+                          </Button>
+                        </div>
+                      ) : (
+                        <Button size="sm" variant="ghost">View</Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Transfer Policy */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Transfer Policy Guidelines</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3 text-sm">
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5" />
+              <p>Employees must complete minimum 2 years at current posting before requesting transfer</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5" />
+              <p>Transfer requests must be submitted 90 days in advance</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5" />
+              <p>Medical and compassionate grounds will be given priority consideration</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5" />
+              <p>All pending work must be handed over before transfer completion</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5" />
+              <p>Transfer orders are subject to administrative approval and departmental requirements</p>
+            </div>
           </div>
         </CardContent>
       </Card>
