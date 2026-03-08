@@ -1,284 +1,13 @@
-// import { useParams } from "react-router";
-// import { Breadcrumb } from "../components/ui/breadcrumb";
-// import { FileText, TrendingUp, Award, ArrowRight, Shield } from "lucide-react";
-// import { Badge2 } from "../components/ui/badge2";
-
-// export default function ServiceBook() {
-//   const { id } = useParams();
-
-//   const serviceHistory = [
-//     {
-//       date: '2025-07-01',
-//       event: 'Annual Increment',
-//       details: 'Basic Pay revised from ₹54,300 to ₹56,100 (3% increment)',
-//       type: 'increment',
-//     },
-//     {
-//       date: '2023-04-15',
-//       event: 'Promotion',
-//       details: 'Promoted from Section Officer to Assistant Director. Pay Level revised to Level-10',
-//       type: 'promotion',
-//     },
-//     {
-//       date: '2021-08-20',
-//       event: 'Transfer',
-//       details: 'Transferred from Regional Office - North to Head Office',
-//       type: 'transfer',
-//     },
-//     {
-//       date: '2017-04-01',
-//       event: 'Probation Completion',
-//       details: 'Successfully completed probation period. Confirmed in service.',
-//       type: 'confirmation',
-//     },
-//     {
-//       date: '2015-04-01',
-//       event: 'Appointment',
-//       details: 'Appointed as Junior Assistant at Pay Level-4 through Direct Recruitment',
-//       type: 'appointment',
-//     },
-//   ];
-
-//   const incrementHistory = [
-//     { year: '2025', oldPay: 54300, newPay: 56100, percentage: 3 },
-//     { year: '2024', oldPay: 52700, newPay: 54300, percentage: 3 },
-//     { year: '2023', oldPay: 45600, newPay: 52700, percentage: 15.6 },
-//     { year: '2022', oldPay: 44300, newPay: 45600, percentage: 3 },
-//   ];
-
-//   const getEventIcon = (type: string) => {
-//     switch (type) {
-//       case 'promotion':
-//         return <Award className="h-5 w-5 text-green-600" />;
-//       case 'increment':
-//         return <TrendingUp className="h-5 w-5 text-blue-600" />;
-//       case 'transfer':
-//         return <ArrowRight className="h-5 w-5 text-amber-600" />;
-//       case 'confirmation':
-//         return <Shield className="h-5 w-5 text-purple-600" />;
-//       default:
-//         return <FileText className="h-5 w-5 text-gray-600" />;
-//     }
-//   };
-
-//   const getEventBadge2 = (type: string) => {
-//     switch (type) {
-//       case 'promotion':
-//         return <Badge2 variant="success">Promotion</Badge2>;
-//       case 'increment':
-//         return <Badge2 variant="info">Increment</Badge2>;
-//       case 'transfer':
-//         return <Badge2 variant="warning">Transfer</Badge2>;
-//       case 'confirmation':
-//         return <Badge2 variant="success">Confirmation</Badge2>;
-//       default:
-//         return <Badge2 variant="default">{type}</Badge2>;
-//     }
-//   };
-
-//   return (
-//     <div className="p-6 space-y-6">
-//       <div>
-//         {/* <Breadcrumb items={[
-//           { label: 'Dashboard', href: '/' },
-//           { label: 'Employee Management' },
-//           { label: 'All Employees', href: '/employees' },
-//           { label: 'Service Book' },
-//         ]} /> */}
-//         <div className="mt-4">
-//           <h1 className="text-2xl font-bold text-foreground">Digital Service Book</h1>
-//           <p className="text-sm text-muted-foreground mt-1">
-//             Complete employment history and lifecycle records
-//           </p>
-//         </div>
-//       </div>
-
-//       {/* Employee Summary */}
-//       <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
-//         <div className="flex items-start justify-between">
-//           <div>
-//             <h2 className="text-xl font-semibold mb-2">Rajesh Kumar Sharma</h2>
-//             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-//               <div>
-//                 <p className="text-muted-foreground">Employee ID</p>
-//                 <p className="font-medium">EMP001</p>
-//               </div>
-//               <div>
-//                 <p className="text-muted-foreground">Current Designation</p>
-//                 <p className="font-medium">Assistant Director</p>
-//               </div>
-//               <div>
-//                 <p className="text-muted-foreground">Pay Level</p>
-//                 <Badge2 variant="info">Level-10</Badge2>
-//               </div>
-//               <div>
-//                 <p className="text-muted-foreground">Basic Pay</p>
-//                 <p className="font-medium">₹56,100</p>
-//               </div>
-//             </div>
-//           </div>
-//           <button className="px-4 py-2 bg-[#1e3a8a] text-white rounded-lg hover:bg-[#1e40af] transition-colors text-sm">
-//             Download Service Book
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Service History Timeline */}
-//       <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
-//         <h3 className="text-lg font-semibold mb-6 pb-3 border-b border-border flex items-center gap-2">
-//           <FileText className="h-5 w-5 text-[#1e3a8a]" />
-//           Service History Timeline
-//         </h3>
-//         <div className="space-y-6">
-//           {serviceHistory.map((event, index) => (
-//             <div key={index} className="flex gap-4">
-//               <div className="flex flex-col items-center">
-//                 <div className="p-2 bg-accent rounded-full">
-//                   {getEventIcon(event.type)}
-//                 </div>
-//                 {index !== serviceHistory.length - 1 && (
-//                   <div className="w-px h-full bg-border mt-2"></div>
-//                 )}
-//               </div>
-//               <div className="flex-1 pb-6">
-//                 <div className="flex items-start justify-between mb-2">
-//                   <div>
-//                     <h4 className="font-semibold text-foreground">{event.event}</h4>
-//                     <p className="text-sm text-muted-foreground">
-//                       {new Date(event.date).toLocaleDateString('en-IN', { 
-//                         day: 'numeric', 
-//                         month: 'long', 
-//                         year: 'numeric' 
-//                       })}
-//                     </p>
-//                   </div>
-//                   {getEventBadge2(event.type)}
-//                 </div>
-//                 <p className="text-sm text-foreground bg-accent/30 p-3 rounded-lg">
-//                   {event.details}
-//                 </p>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Increment History */}
-//       <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
-//         <h3 className="text-lg font-semibold mb-4 pb-3 border-b border-border flex items-center gap-2">
-//           <TrendingUp className="h-5 w-5 text-[#1e3a8a]" />
-//           Pay Increment History
-//         </h3>
-//         <div className="overflow-x-auto">
-//           <table className="w-full">
-//             <thead className="bg-accent/50 border-b border-border">
-//               <tr>
-//                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-//                   Financial Year
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-//                   Previous Pay
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-//                   Revised Pay
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-//                   Increment %
-//                 </th>
-//                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-//                   Increment Amount
-//                 </th>
-//               </tr>
-//             </thead>
-//             <tbody className="divide-y divide-border">
-//               {incrementHistory.map((inc, index) => (
-//                 <tr key={index} className="hover:bg-accent/30 transition-colors">
-//                   <td className="px-6 py-4 whitespace-nowrap font-medium">
-//                     {inc.year}-{(parseInt(inc.year) + 1).toString().slice(2)}
-//                   </td>
-//                   <td className="px-6 py-4 whitespace-nowrap">
-//                     ₹{inc.oldPay.toLocaleString('en-IN')}
-//                   </td>
-//                   <td className="px-6 py-4 whitespace-nowrap font-semibold text-green-600">
-//                     ₹{inc.newPay.toLocaleString('en-IN')}
-//                   </td>
-//                   <td className="px-6 py-4 whitespace-nowrap">
-//                     <Badge2 variant="success">{inc.percentage}%</Badge2>
-//                   </td>
-//                   <td className="px-6 py-4 whitespace-nowrap font-medium">
-//                     +₹{(inc.newPay - inc.oldPay).toLocaleString('en-IN')}
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-
-//       {/* Career Summary */}
-//       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-//         <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
-//           <h3 className="text-lg font-semibold mb-4">Career Summary</h3>
-//           <div className="space-y-3">
-//             <div className="flex justify-between">
-//               <span className="text-sm text-muted-foreground">Total Service</span>
-//               <span className="font-semibold">9 Years 11 Months</span>
-//             </div>
-//             <div className="flex justify-between">
-//               <span className="text-sm text-muted-foreground">Promotions</span>
-//               <span className="font-semibold">2</span>
-//             </div>
-//             <div className="flex justify-between">
-//               <span className="text-sm text-muted-foreground">Transfers</span>
-//               <span className="font-semibold">1</span>
-//             </div>
-//             <div className="flex justify-between">
-//               <span className="text-sm text-muted-foreground">Annual Increments</span>
-//               <span className="font-semibold">8</span>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
-//           <h3 className="text-lg font-semibold mb-4">Training & Development</h3>
-//           <div className="space-y-3">
-//             <div className="text-sm">
-//               <p className="font-medium">Leadership Training</p>
-//               <p className="text-muted-foreground">Completed - Jan 2024</p>
-//             </div>
-//             <div className="text-sm">
-//               <p className="font-medium">Advanced Excel</p>
-//               <p className="text-muted-foreground">Completed - Aug 2023</p>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
-//           <h3 className="text-lg font-semibold mb-4">Upcoming Milestones</h3>
-//           <div className="space-y-3">
-//             <div className="text-sm">
-//               <p className="font-medium">Next Increment Due</p>
-//               <p className="text-muted-foreground">July 2026</p>
-//             </div>
-//             <div className="text-sm">
-//               <p className="font-medium">Retirement Age</p>
-//               <p className="text-muted-foreground">March 2045 (60 years)</p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
 "use client";
 
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import {
     FileText, TrendingUp, Eye, Edit, Award, ArrowRight,
-    Shield, Users, Clock, Star, Download, ChevronRight
+    Shield, Users, Clock, Star, Download, ChevronRight,
+    Landmark,
+    User,
+    ArrowUpCircle
 } from "lucide-react";
 
 interface Employee {
@@ -408,6 +137,9 @@ const statusBadge = (status: string) => {
     return <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${cls}`}>{status}</span>;
 };
 
+const formInput =
+"w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+
 export default function EmployeesPage() {
     const [mode, setMode] = useState<"view" | "edit" | null>(null);
     const [selected, setSelected] = useState<Employee | null>(null);
@@ -446,51 +178,281 @@ export default function EmployeesPage() {
                             className="max-h-[95vh] overflow-y-auto rounded-2xl p-0"
                             style={{ maxWidth: "90%" }}
                         >
-                            <div>
-                                {/* Modal Header */}
-                                <div className="sticky top-0 z-10 bg-white border-b border-slate-100 px-8 py-5 flex items-center justify-between">
-                                    <div>
-                                        <DialogTitle className="text-xl font-bold text-slate-900">
-                                            Add Digital Service Book
-                                        </DialogTitle>
-                                        <p className="text-xs text-slate-400 mt-0.5">
-                                            Add employment history & lifecycle records
-                                        </p>
-                                    </div>
+<div className="px-8 py-6 space-y-8">
 
-                                    <button
-                                        onClick={() => setOpenAddModal(false)}
-                                        className="flex items-center gap-2 px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-medium rounded-lg transition-colors"
-                                    >
-                                        Close
-                                    </button>
-                                </div>
+{/* Employee Basic Information */}
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div className="px-6 py-4 border-b flex items-center gap-2">
+    <Users size={16} className="text-blue-600" />
+    <h3 className="font-semibold text-slate-800">Employee Information</h3>
+  </div>
 
-                                {/* Body Section */}
-                                <div className="p-8 space-y-6">
-                                    <input
-                                        type="text"
-                                        placeholder="Employee Name"
-                                        className="w-full border rounded-lg px-4 py-2 text-sm"
-                                    />
+  <div className="grid grid-cols-3 gap-5 p-6">
 
-                                    <input
-                                        type="text"
-                                        placeholder="Designation"
-                                        className="w-full border rounded-lg px-4 py-2 text-sm"
-                                    />
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Employee ID</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
 
-                                    <input
-                                        type="number"
-                                        placeholder="Basic Pay"
-                                        className="w-full border rounded-lg px-4 py-2 text-sm"
-                                    />
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Full Name</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
 
-                                    <button className="px-6 py-2 bg-blue-700 text-white rounded-lg text-sm">
-                                        Save Service Book
-                                    </button>
-                                </div>
-                            </div>
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Department</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Designation</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Joining Date</label>
+      <input type="date" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Employment Status</label>
+      <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+        <option>Active</option>
+        <option>On Leave</option>
+        <option>Suspended</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+
+{/* Personal Details */}
+
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div className="px-6 py-4 border-b flex items-center gap-2">
+    <User size={16} className="text-purple-600"/>
+    <h3 className="font-semibold text-slate-800">Personal Details</h3>
+  </div>
+
+  <div className="grid grid-cols-3 gap-5 p-6">
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Father / Husband Name</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Gender</label>
+      <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Category</label>
+      <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+        <option>General</option>
+        <option>OBC</option>
+        <option>SC</option>
+        <option>ST</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Aadhaar Number</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">PAN Number</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Mobile Number</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+  </div>
+</div>
+
+
+{/* Pay Details */}
+
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div className="px-6 py-4 border-b flex items-center gap-2">
+    <TrendingUp size={16} className="text-emerald-600"/>
+    <h3 className="font-semibold text-slate-800">Pay Details</h3>
+  </div>
+
+  <div className="grid grid-cols-3 gap-5 p-6">
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Pay Commission</label>
+      <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+        <option>7th Pay</option>
+        <option>6th Pay</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Pay Level</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Basic Pay</label>
+      <input type="number" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Grade Pay</label>
+      <input type="number" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Last Increment Date</label>
+      <input type="date" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Next Increment Due</label>
+      <input type="date" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+  </div>
+</div>
+
+
+{/* Recruitment / Appointment */}
+
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div className="px-6 py-4 border-b flex items-center gap-2">
+    <FileText size={16} className="text-indigo-600"/>
+    <h3 className="font-semibold text-slate-800">Recruitment / Appointment</h3>
+  </div>
+
+  <div className="grid grid-cols-3 gap-5 p-6">
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Recruitment Type</label>
+      <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+        <option>Direct Recruitment</option>
+        <option>Promotion</option>
+        <option>Deputation</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Appointment Order No.</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Order Date</label>
+      <input type="date" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+  </div>
+</div>
+
+
+{/* Promotion Details */}
+
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div className="px-6 py-4 border-b flex items-center gap-2">
+    <ArrowUpCircle size={16} className="text-green-600"/>
+    <h3 className="font-semibold text-slate-800">Promotion Details</h3>
+  </div>
+
+  <div className="grid grid-cols-3 gap-5 p-6">
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Previous Designation</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">New Designation</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Promotion Order No.</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+  </div>
+</div>
+
+
+{/* Pension Details */}
+
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div className="px-6 py-4 border-b flex items-center gap-2">
+    <Landmark size={16} className="text-orange-600"/>
+    <h3 className="font-semibold text-slate-800">Pension Details</h3>
+  </div>
+
+  <div className="grid grid-cols-3 gap-5 p-6">
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Pension Scheme</label>
+      <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+        <option>NPS</option>
+        <option>OPS</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">PRAN Number</label>
+      <input className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+  </div>
+</div>
+
+
+{/* Retirement */}
+
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div className="px-6 py-4 border-b flex items-center gap-2">
+    <Clock size={16} className="text-blue-500"/>
+    <h3 className="font-semibold text-slate-800">Retirement Details</h3>
+  </div>
+
+  <div className="grid grid-cols-2 gap-5 p-6">
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Date of Birth</label>
+      <input type="date" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+    <div>
+      <label className="text-xs text-slate-500 font-medium">Retirement Date</label>
+      <input type="date" className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"/>
+    </div>
+
+  </div>
+</div>
+
+
+{/* Submit */}
+
+<div className="flex justify-end gap-3">
+  <button className="px-6 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm">
+    Cancel
+  </button>
+
+  <button className="px-6 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-lg text-sm">
+    Save Service Book
+  </button>
+</div>
+
+</div>
                         </DialogContent>
                     </Dialog>
 

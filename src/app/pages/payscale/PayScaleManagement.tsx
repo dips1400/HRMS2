@@ -29,6 +29,14 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs"
+import { useState } from "react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "../../components/ui/dialog"
 
 const stats = [
   {
@@ -143,6 +151,8 @@ const payMatrix = [
 ]
 
 export function PayScaleManagement() {
+  const [openPayScale, setOpenPayScale] = useState(false)
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -203,7 +213,7 @@ export function PayScaleManagement() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Active Pay Scales (7th Pay Commission)</CardTitle>
-                <Button>
+                <Button onClick={() => setOpenPayScale(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Add Pay Scale
                 </Button>
@@ -467,6 +477,171 @@ export function PayScaleManagement() {
           </Card>
         </TabsContent>
       </Tabs>
+      <Dialog open={openPayScale} onOpenChange={setOpenPayScale} >
+  <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+    <DialogHeader>
+      <DialogTitle>Add Government Pay Scale</DialogTitle>
+    </DialogHeader>
+
+    <div className="grid grid-cols-2 gap-5 py-4" >
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Pay Commission
+        </label>
+        <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+          <option>7th Pay Commission</option>
+          <option>6th Pay Commission</option>
+          <option>8th Pay Commission (Future)</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Pay Scale Name
+        </label>
+        <input
+          placeholder="Example: Level 7 - Administrative Officer"
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Pay Level
+        </label>
+        <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+          <option>Level 1</option>
+          <option>Level 2</option>
+          <option>Level 3</option>
+          <option>Level 4</option>
+          <option>Level 5</option>
+          <option>Level 6</option>
+          <option>Level 7</option>
+          <option>Level 8</option>
+          <option>Level 9</option>
+          <option>Level 10</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Pay Band
+        </label>
+        <input
+          placeholder="PB-1 / PB-2"
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Minimum Basic Pay
+        </label>
+        <input
+          type="number"
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Maximum Basic Pay
+        </label>
+        <input
+          type="number"
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Increment Percentage
+        </label>
+        <input
+          type="number"
+          defaultValue={3}
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Grade Pay
+        </label>
+        <input
+          type="number"
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Effective From
+        </label>
+        <input
+          type="date"
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          HRA Category
+        </label>
+        <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+          <option>X City (24%)</option>
+          <option>Y City (16%)</option>
+          <option>Z City (8%)</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          DA Applicable
+        </label>
+        <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="text-xs text-gray-500 font-medium">
+          Status
+        </label>
+        <select className="w-full border rounded-lg px-3 py-2 mt-1 text-sm">
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+
+      <div className="col-span-2">
+        <label className="text-xs text-gray-500 font-medium">
+          GR / Government Order Reference
+        </label>
+        <input
+          placeholder="GR No / Notification Reference"
+          className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+        />
+      </div>
+
+    </div>
+
+    <DialogFooter>
+      <Button
+        variant="outline"
+        onClick={() => setOpenPayScale(false)}
+      >
+        Cancel
+      </Button>
+
+      <Button>
+        Save Pay Scale
+      </Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
     </div>
   )
 }

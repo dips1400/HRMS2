@@ -16,14 +16,15 @@ import ProbationManagement from "./pages/ProbationManagement";
 import Reports from "./pages/Reports";
 import OrganizationStructure from "./pages/OrganizationStructure";
 import MainLayout from "./components/MainLayout";
-import ServiceBook  from "./pages/ServiceBook";
-import  Attendance  from "./pages/AttendanceManagement";
+import ServiceBook from "./pages/ServiceBook";
+import Attendance from "./pages/AttendanceManagement";
 import { PayrollDashboard } from "./pages/payroll/PayrollDashboard"
 import { SalarySlips } from "./pages/payroll/SalarySlips"
 import { PayScaleManagement } from "./pages/payscale/PayScaleManagement"
 import { TediousCalculations } from "./pages/payscale/TediousCalculations"
 import { AllowanceCalculator } from "./pages/payscale/AllowanceCalculator"
 import Grievances from "../app/pages/Grievances"
+import EmployeeReportView from "./pages/reports/employee-view/EmployeeReportView";
 
 export const router = createBrowserRouter([
   {
@@ -31,16 +32,16 @@ export const router = createBrowserRouter([
     Component: MainLayout,
     children: [
       { index: true, Component: Dashboard },
-           { path: "employees", Component: EmployeeList },
+      { path: "employees", Component: EmployeeList },
       { path: "employees/add", Component: AddEmployee },
       { path: "employees/:id", Component: EmployeeProfile },
-      { path: "servicebook", Component: ServiceBook},
+      { path: "servicebook", Component: ServiceBook },
       { path: "recruitment", Component: Recruitment },
       { path: "leave", Component: LeaveManagement },
-      { path: "attandence", Component: Attendance},
-            { path: "payroll", Component: PayrollDashboard },
+      { path: "attandence", Component: Attendance },
+      { path: "payroll", Component: PayrollDashboard },
       { path: "payroll/salary-slips", Component: SalarySlips },
-            { path: "payscale", Component: PayScaleManagement },
+      { path: "payscale", Component: PayScaleManagement },
       { path: "payscale/tedious", Component: TediousCalculations },
       { path: "payscale/allowance", Component: AllowanceCalculator },
       { path: "pf-trust", Component: PFTrustManagement },
@@ -51,8 +52,9 @@ export const router = createBrowserRouter([
       { path: "retirement", Component: RetirementManagement },
       { path: "probation", Component: ProbationManagement },
       { path: "organization", Component: OrganizationStructure },
-      { path: "grievances", Component:Grievances},
+      { path: "grievances", Component: Grievances },
       { path: "reports", Component: Reports },
+      { path: "reports/employee-view",Component: EmployeeReportView },
     ],
   },
 ]);

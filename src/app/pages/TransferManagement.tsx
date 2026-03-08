@@ -74,6 +74,9 @@ const transferRequests = [
 ];
 
 export default function Transfers() {
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [selectedTransfer, setSelectedTransfer] = useState<any>(null);
+
   const handleApprove = (id: string) => {
     toast.success(`Transfer request ${id} approved`);
   };
@@ -82,9 +85,9 @@ export default function Transfers() {
     toast.error(`Transfer request ${id} rejected`);
   };
 
-   const [handleModalOpen,setHandleModalOpen] = useState(false)
+  const [handleModalOpen, setHandleModalOpen] = useState(false)
 
-     const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     type: '',
     employeeId: '',
@@ -104,7 +107,7 @@ export default function Transfers() {
     setHandleModalOpen(false)
 
     toast.success(`Transfer request created successfully`);
-  
+
   };
 
   return (
@@ -120,120 +123,120 @@ export default function Transfers() {
         <Button onClick={() => setHandleModalOpen(true)}>Initiate Transfer</Button>
       </div>
 
-             <Dialog open={handleModalOpen}   >
+      <Dialog open={handleModalOpen}   >
         <DialogContent >
           <DialogHeader>
             <DialogTitle>Apply For Transfer</DialogTitle>
           </DialogHeader>
 
-                 <div className="p-2 space-y-3" style={{maxHeight:"80vh", overflowY:"scroll"}}>
-      <div>
-        <h1 className="text-2xl font-bold text-foreground mt-4">Create Transfer/Promotion Order</h1>
-      </div>
-
-      <div className="max-w-3xl">
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-border p-6 shadow-sm space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="p-2 space-y-3" style={{ maxHeight: "80vh", overflowY: "scroll" }}>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Type *</label>
-              <select
-                value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
-                required
-              >
-                <option value="">Select Type</option>
-                <option value="Transfer">Transfer</option>
-              </select>
+              <h1 className="text-2xl font-bold text-foreground mt-4">Create Transfer/Promotion Order</h1>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Employee *</label>
-              <select
-                value={formData.employeeId}
-                onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
-                required
-              >
-                <option value="">Select Employee</option>
-                <option value="EMP001">EMP001 - Rajesh Kumar</option>
-                <option value="EMP002">EMP002 - Priya Singh</option>
-              </select>
+
+            <div className="max-w-3xl">
+              <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-border p-6 shadow-sm space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Type *</label>
+                    <select
+                      value={formData.type}
+                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                      required
+                    >
+                      <option value="">Select Type</option>
+                      <option value="Transfer">Transfer</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Employee *</label>
+                    <select
+                      value={formData.employeeId}
+                      onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                      required
+                    >
+                      <option value="">Select Employee</option>
+                      <option value="EMP001">EMP001 - Rajesh Kumar</option>
+                      <option value="EMP002">EMP002 - Priya Singh</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Effective Date *</label>
+                    <input
+                      type="date"
+                      value={formData.effectiveDate}
+                      onChange={(e) => setFormData({ ...formData, effectiveDate: e.target.value })}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">Order Number *</label>
+                    <input
+                      type="text"
+                      value={formData.orderNumber}
+                      onChange={(e) => setFormData({ ...formData, orderNumber: e.target.value })}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">From Designation</label>
+                    <input
+                      type="text"
+                      value={formData.fromDesignation}
+                      onChange={(e) => setFormData({ ...formData, fromDesignation: e.target.value })}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">To Designation *</label>
+                    <input
+                      type="text"
+                      value={formData.toDesignation}
+                      onChange={(e) => setFormData({ ...formData, toDesignation: e.target.value })}
+                      className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Remarks</label>
+                  <textarea
+                    value={formData.remarks}
+                    onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
+                    rows={3}
+                    className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
+                  />
+                </div>
+
+                <div className="flex gap-4 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setHandleModalOpen(false)}
+                    className="flex-1 px-6 py-3 border border-border rounded-lg hover:bg-accent"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 px-6 py-3 bg-[#1e3a8a] text-white rounded-lg hover:bg-[#1e40af]"
+                  >
+                    Create Order
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Effective Date *</label>
-              <input
-                type="date"
-                value={formData.effectiveDate}
-                onChange={(e) => setFormData({ ...formData, effectiveDate: e.target.value })}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Order Number *</label>
-              <input
-                type="text"
-                value={formData.orderNumber}
-                onChange={(e) => setFormData({ ...formData, orderNumber: e.target.value })}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">From Designation</label>
-              <input
-                type="text"
-                value={formData.fromDesignation}
-                onChange={(e) => setFormData({ ...formData, fromDesignation: e.target.value })}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">To Designation *</label>
-              <input
-                type="text"
-                value={formData.toDesignation}
-                onChange={(e) => setFormData({ ...formData, toDesignation: e.target.value })}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">Remarks</label>
-            <textarea
-              value={formData.remarks}
-              onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] bg-input-background"
-            />
-          </div>
-
-          <div className="flex gap-4 pt-4">
-            <button
-              type="button"
-              onClick={() => setHandleModalOpen(false)}
-              className="flex-1 px-6 py-3 border border-border rounded-lg hover:bg-accent"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="flex-1 px-6 py-3 bg-[#1e3a8a] text-white rounded-lg hover:bg-[#1e40af]"
-            >
-              Create Order
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
         </DialogContent>
       </Dialog>
 
@@ -310,19 +313,19 @@ export default function Transfers() {
                     <TableCell className="max-w-xs truncate">{request.reason}</TableCell>
                     <TableCell>{request.requestDate}</TableCell>
                     <TableCell>
-                      <Badge 
+                      <Badge
                         variant={
                           request.status === "Approved" ? "default" :
-                          request.status === "Rejected" ? "destructive" :
-                          request.status === "In Transit" ? "default" :
-                          "secondary"
+                            request.status === "Rejected" ? "destructive" :
+                              request.status === "In Transit" ? "default" :
+                                "secondary"
                         }
                       >
                         {request.status}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      {request.status === "Pending" ? (
+                      {/* {request.status === "Pending" ? (
                         <div className="flex gap-2">
                           <Button 
                             size="sm" 
@@ -341,7 +344,46 @@ export default function Transfers() {
                         </div>
                       ) : (
                         <Button size="sm" variant="ghost">View</Button>
-                      )}
+                      )} */}
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => {
+                            setSelectedTransfer(request);
+                            setViewModalOpen(true);
+                          }}
+                        >
+                          View
+                        </Button>
+
+                        {/* Approve */}
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-green-600"
+                          onClick={() => {
+                            toast.success("Transfer request approved successfully");
+                            setViewModalOpen(false);
+                          }}
+                        >
+                          Approve
+                        </Button>
+
+                        {/* Reject */}
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-red-600"
+                          onClick={() => {
+                            toast.error("Transfer request rejected");
+                            setViewModalOpen(false);
+                          }}
+                        >
+                          Reject
+                        </Button>
+
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -381,6 +423,73 @@ export default function Transfers() {
           </div>
         </CardContent>
       </Card>
+
+      <Dialog open={viewModalOpen} onOpenChange={setViewModalOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Transfer Request Details</DialogTitle>
+          </DialogHeader>
+
+          {selectedTransfer && (
+            <div className="space-y-4 text-sm">
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-gray-500 text-xs">Request ID</p>
+                  <p className="font-medium">{selectedTransfer.id}</p>
+                </div>
+
+                <div>
+                  <p className="text-gray-500 text-xs">Request Date</p>
+                  <p className="font-medium">{selectedTransfer.requestDate}</p>
+                </div>
+              </div>
+
+              <div className="border rounded-lg p-3 bg-gray-50">
+                <p className="text-gray-500 text-xs">Employee</p>
+                <p className="font-medium">{selectedTransfer.employeeName}</p>
+                <p className="text-gray-500 text-xs">{selectedTransfer.employeeId}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-gray-500 text-xs">Current Department</p>
+                  <p className="font-medium">{selectedTransfer.currentDepartment}</p>
+                </div>
+
+                <div>
+                  <p className="text-gray-500 text-xs">Current Location</p>
+                  <p className="font-medium">{selectedTransfer.currentLocation}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-gray-500 text-xs">Requested Department</p>
+                  <p className="font-medium">{selectedTransfer.requestedDepartment}</p>
+                </div>
+
+                <div>
+                  <p className="text-gray-500 text-xs">Requested Location</p>
+                  <p className="font-medium">{selectedTransfer.requestedLocation}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-gray-500 text-xs">Reason</p>
+                <p className="font-medium">{selectedTransfer.reason}</p>
+              </div>
+
+              <div className="pt-3 border-t flex justify-end">
+                <Button variant="outline" onClick={() => setViewModalOpen(false)}>
+                  Close
+                </Button>
+              </div>
+
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
